@@ -163,3 +163,10 @@ function initializePoints() {
 
     renderPoints();
 }
+
+//Puxa a localização do usuário
+navigator.geolocation.getCurrentPosition((position) => {
+    console.log(position);
+    console.log(position.coords.latitude);
+    console.log(position.coords.longitude);
+});
