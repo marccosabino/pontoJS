@@ -84,7 +84,7 @@ function initializeUsers() {
         option.textContent = regime.name; // Modificado para usar o nome do regime
         userRegime.appendChild(option);
     });
-
+}
     userForm.addEventListener("submit", event => {
         event.preventDefault();
         const user = {
@@ -112,14 +112,16 @@ function initializeUsers() {
     }
 
     function deleteUser(index) {
+        // Exibir alerta antes de excluir
+        alert("Não é possível excluir o ponto.");
+        
+        // Se você realmente deseja que a exclusão ocorra, mantenha as linhas abaixo
         const users = loadFromLocalStorage("users");
         users.splice(index, 1);
         saveToLocalStorage("users", users);
         renderUsers();
     }
-
-    renderUsers();
-}
+    
 
 // Funções para Registro de Pontos
 function initializePoints() {
@@ -134,6 +136,7 @@ function initializePoints() {
             date: document.getElementById("datePoint").value,
             time: document.getElementById("timePoint").value,
             justification: document.getElementById("pointJustification").value,
+            file: document.getElementById("fileUpload").files[0] // Adicionando o arquivo
         };
 
         const users = loadFromLocalStorage("users");
@@ -170,3 +173,16 @@ navigator.geolocation.getCurrentPosition((position) => {
     console.log(position.coords.latitude);
     console.log(position.coords.longitude);
 });
+
+// Exibe uma mensagem de alerta informando que o ponto foi registrado
+divAlerta.classList.remove("hidden");
+divAlerta.classList.add("show");
+
+const AlertaTexto = document.getElementById("alerta-texto");
+AlertaTexto.textContent = "Ponto Registrado como: " + tipoPonto + " " + hora;
+
+// Oculta a mensagem de alerta após 5 segundos
+setTimeout(() => {
+    divAlerta.classList.remove("show");
+    divAlerta.classList.add("hidden");
+}, 5000);

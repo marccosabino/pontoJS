@@ -19,9 +19,15 @@
                 <input type="time" id="timePoint" class="form-control" required>
             </div>
         </div>
+        
         <div class="mt-3">
             <label for="pointJustification" class="form-label">Justificativa (se necessário)</label>
             <textarea id="pointJustification" class="form-control"></textarea>
+            <input type="file" id="fileUpload" accept="*/*">
+        </div>
+
+        <div id='pointform'>
+             <!-- Campo para upload de arquivo -->
         </div>
         <button type="submit" class="btn btn-primary mt-3">Bater Ponto</button>
     </form>
