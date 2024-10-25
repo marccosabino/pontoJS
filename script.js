@@ -26,19 +26,14 @@ function initializeRegimes() {
 
     regimeForm.addEventListener("submit", event => {
         event.preventDefault();
-        
-        // Captura os dados do formulário
         const regime = {
             name: document.getElementById("regimeName").value,
             workHours: document.getElementById("workHours").value,
             lunchHours: document.getElementById("lunchHours").value,
         };
-        
-        // Salva no LocalStorage
         const regimes = loadFromLocalStorage("regimes");
         regimes.push(regime);
         saveToLocalStorage("regimes", regimes);
-
         renderRegimes();
         regimeForm.reset();
     });
@@ -46,8 +41,6 @@ function initializeRegimes() {
     function renderRegimes() {
         regimeList.innerHTML = "";
         const regimes = loadFromLocalStorage("regimes");
-        
-        // Renderiza cada regime
         regimes.forEach((regime, index) => {
             const listItem = document.createElement("li");
             listItem.className = "list-group-item d-flex justify-content-between align-items-center";
@@ -59,16 +52,8 @@ function initializeRegimes() {
         });
     }
 
-    function deleteRegime(index) {
-        const regimes = loadFromLocalStorage("regimes");
-        regimes.splice(index, 1);
-        saveToLocalStorage("regimes", regimes);
-        renderRegimes();
-    }
-
     renderRegimes();
 }
-
 
 // Funções CRUD de Usuários
 function initializeUsers() {
@@ -76,15 +61,14 @@ function initializeUsers() {
     const userList = document.getElementById("userList");
     const userRegime = document.getElementById("userRegime");
 
-    // Carrega regimes no dropdown
     const regimes = loadFromLocalStorage("regimes");
     regimes.forEach(regime => {
         const option = document.createElement("option");
-        option.value = regime.name; // Modificado para usar o nome do regime
-        option.textContent = regime.name; // Modificado para usar o nome do regime
+        option.value = regime.name;
+        option.textContent = regime.name;
         userRegime.appendChild(option);
     });
-}
+
     userForm.addEventListener("submit", event => {
         event.preventDefault();
         const user = {
@@ -110,18 +94,7 @@ function initializeUsers() {
             userList.appendChild(listItem);
         });
     }
-
-    function deleteUser(index) {
-        // Exibir alerta antes de excluir
-        alert("Não é possível excluir o ponto.");
-        
-        // Se você realmente deseja que a exclusão ocorra, mantenha as linhas abaixo
-        const users = loadFromLocalStorage("users");
-        users.splice(index, 1);
-        saveToLocalStorage("users", users);
-        renderUsers();
-    }
-    
+}
 
 // Funções para Registro de Pontos
 function initializePoints() {
@@ -130,24 +103,27 @@ function initializePoints() {
 
     pointForm.addEventListener("submit", event => {
         event.preventDefault();
+
         const point = {
             cpf: document.getElementById("cpfPoint").value,
-            dob: document.getElementById("dobPoint").value,
             date: document.getElementById("datePoint").value,
-            time: document.getElementById("timePoint").value,
+            entryTime: document.getElementById("entryTime").value,
+            exitTime: document.getElementById("exitTime").value,
+            breakStart: document.getElementById("breakStart").value,
+            breakEnd: document.getElementById("breakEnd").value,
             justification: document.getElementById("pointJustification").value,
-            file: document.getElementById("fileUpload").files[0] // Adicionando o arquivo
         };
 
         const users = loadFromLocalStorage("users");
-        const userExists = users.some(user => user.cpf === point.cpf && user.dob === point.dob);
+        const userExists = users.some(user => user.cpf === point.cpf);
         
         if (userExists) {
             const points = loadFromLocalStorage("points");
             points.push(point);
             saveToLocalStorage("points", points);
             renderPoints();
-            pointForm.reset();
+            pointForm.reset(); // Limpa o formulário
+            alert("Ponto registrado com sucesso!");
         } else {
             alert("Usuário não encontrado!");
         }
@@ -159,7 +135,7 @@ function initializePoints() {
         points.forEach(point => {
             const listItem = document.createElement("li");
             listItem.className = "list-group-item";
-            listItem.textContent = `${point.cpf} - ${point.date} ${point.time} - ${point.justification}`;
+            listItem.textContent = `CPF: ${point.cpf}, Data: ${point.date}, Entrada: ${point.entryTime}, Saída: ${point.exitTime}, Intervalo: ${point.breakStart} - ${point.breakEnd}, Justificativa: ${point.justification}`;
             pointList.appendChild(listItem);
         });
     }
@@ -167,22 +143,18 @@ function initializePoints() {
     renderPoints();
 }
 
-//Puxa a localização do usuário
-navigator.geolocation.getCurrentPosition((position) => {
-    console.log(position);
-    console.log(position.coords.latitude);
-    console.log(position.coords.longitude);
+// Função para excluir usuário
+function deleteUser(index) {
+    const users = loadFromLocalStorage("users");
+    users.splice(index, 1);
+    saveToLocalStorage("users", users);
+    renderUsers();
+    alert("Usuário excluído com sucesso.");
+}
+
+// Inicializa todas as funções necessárias ao carregar a página
+document.addEventListener("DOMContentLoaded", () => {
+    initializeRegimes();
+    initializeUsers();
+    initializePoints();
 });
-
-// Exibe uma mensagem de alerta informando que o ponto foi registrado
-divAlerta.classList.remove("hidden");
-divAlerta.classList.add("show");
-
-const AlertaTexto = document.getElementById("alerta-texto");
-AlertaTexto.textContent = "Ponto Registrado como: " + tipoPonto + " " + hora;
-
-// Oculta a mensagem de alerta após 5 segundos
-setTimeout(() => {
-    divAlerta.classList.remove("show");
-    divAlerta.classList.add("hidden");
-}, 5000);
