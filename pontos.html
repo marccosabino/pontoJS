@@ -1,0 +1,29 @@
+<div class="col-md-12">
+    <h3>Registro de Ponto</h3>
+    <form id="pointForm">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="cpfPoint" class="form-label">CPF</label>
+                <input type="text" id="cpfPoint" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label for="dobPoint" class="form-label">Data de Nascimento</label>
+                <input type="date" id="dobPoint" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label for="datePoint" class="form-label">Data do Ponto</label>
+                <input type="date" id="datePoint" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label for="timePoint" class="form-label">Hora do Ponto</label>
+                <input type="time" id="timePoint" class="form-control" required>
+            </div>
+        </div>
+        <div class="mt-3">
+            <label for="pointJustification" class="form-label">Justificativa (se necessário)</label>
+            <textarea id="pointJustification" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Bater Ponto</button>
+    </form>
+    <ul id="pointList" class="list-group mt-3"></ul>
+</div>

@@ -1,0 +1,23 @@
+<div class="col-md-12">
+    <h3>Cadastro de Usuários</h3>
+    <form id="userForm">
+        <div class="mb-3">
+            <label for="userCpf" class="form-label">CPF</label>
+            <input type="text" id="userCpf" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="userName" class="form-label">Nome</label>
+            <input type="text" id="userName" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="userDob" class="form-label">Data de Nascimento</label>
+            <input type="date" id="userDob" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="userRegime" class="form-label">Regime</label>
+            <select id="userRegime" class="form-select" required></select>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar Usuário</button>
+    </form>
+    <ul id="userList" class="list-group mt-3"></ul>
+</div>
