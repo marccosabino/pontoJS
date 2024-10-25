@@ -10,6 +10,22 @@ function loadPage(page) {
         });
 }
 
+
+// Função para exibir a data e hora atual
+function updateCurrentDateTime() {
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    const formattedTime = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    document.getElementById('currentDateTime').innerHTML = `<div>${formattedDate}</div><div>${formattedTime}</div>`;
+}
+
+// Chama a função para atualizar a data e hora imediatamente
+updateCurrentDateTime();
+
+// Atualiza a data e hora a cada segundo
+setInterval(updateCurrentDateTime, 1000);
+
+
 // Funções de utilidade para LocalStorage
 function loadFromLocalStorage(key) {
     return JSON.parse(localStorage.getItem(key)) || [];
@@ -17,6 +33,13 @@ function loadFromLocalStorage(key) {
 
 function saveToLocalStorage(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
+}
+
+// Função para atualizar a data e hora atuais
+function updateDateTime() {
+    const currentDateTimeElement = document.getElementById("currentDateTime");
+    const now = new Date();
+    currentDateTimeElement.textContent = `Data e Hora Atual: ${now.toLocaleString('pt-BR')}`;
 }
 
 // Funções CRUD de Regimes
@@ -122,7 +145,7 @@ function initializePoints() {
             points.push(point);
             saveToLocalStorage("points", points);
             renderPoints();
-            pointForm.reset(); // Limpa o formulário
+            pointForm.reset();
             alert("Ponto registrado com sucesso!");
         } else {
             alert("Usuário não encontrado!");
@@ -154,7 +177,5 @@ function deleteUser(index) {
 
 // Inicializa todas as funções necessárias ao carregar a página
 document.addEventListener("DOMContentLoaded", () => {
-    initializeRegimes();
-    initializeUsers();
-    initializePoints();
+    updateDateTime(); // Atualiza a data e hora ao carregar a página
 });
